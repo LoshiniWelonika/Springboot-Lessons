@@ -1,5 +1,7 @@
 package com.springlessons.firstapp.Domain.Entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -14,5 +16,7 @@ public class Student {
     @Id
     private Integer id; 
     private String name; 
-    private String address;    
+    private String address; 
+    private Integer grade; 
+    private Date dob;  
 }

@@ -10,5 +10,4 @@ import com.springlessons.firstapp.Domain.Entity.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer>{
     Optional<Student> findByName(String Name); 
-    
 }
