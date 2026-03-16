@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.springlessons.firstapp.Application.dto.Request.CreateStudentDto;
 import com.springlessons.firstapp.Application.dto.Response.StudentGeneralDto;
 import com.springlessons.firstapp.Domain.Entity.Student;
 import com.springlessons.firstapp.External.Repository.StudentRepository;
@@ -32,5 +33,41 @@ public class StudentService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    public ResponseEntity<Student> addStudent(CreateStudentDto createStudentDto) {
+        Student student = new Student();
+        student.setName(createStudentDto.getName());
+        student.setAddress(createStudentDto.getAddress());
+        student.setGrade(createStudentDto.getGrade());
+        studentRepository.save(student);
+
+        return ResponseEntity.ok(student); 
+    }
+
+    public ResponseEntity<String> deleteStudent(Integer id){
+        Optional<Student> optstudent = studentRepository.findById(id);
+
+        if(optstudent.isPresent()){
+            studentRepository.deleteById(id);
+            return ResponseEntity.ok("Student deleted successfully");
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    public ResponseEntity<String> updateStudent(Integer id, String newName) {
+        Optional<Student> optionalstudent = studentRepository.findById(id);
+        if(optionalstudent.isPresent()){
+            Student student = optionalstudent.get();
+            student.setName(newName);
+            studentRepository.save(student);
+            return ResponseEntity.ok("Student updated successfully");
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
