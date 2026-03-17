@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import com.springlessons.firstapp.Application.dto.Request.CreateStudentDto;
 import com.springlessons.firstapp.Application.dto.Response.StudentGeneralDto;
 import com.springlessons.firstapp.Domain.Entity.Student;
+import com.springlessons.firstapp.Domain.Exception.StudentNotFound;
 import com.springlessons.firstapp.External.Repository.StudentRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -59,13 +62,14 @@ public class StudentService {
     public ResponseEntity<String> updateStudent(Integer id, String newName) {
         Optional<Student> optionalstudent = studentRepository.findById(id);
         if(optionalstudent.isPresent()){
+            log.info("Student Found and the id is " + id);
             Student student = optionalstudent.get();
             student.setName(newName);
             studentRepository.save(student);
             return ResponseEntity.ok("Student updated successfully");
         }
         else{
-            return ResponseEntity.notFound().build();
+            throw new StudentNotFound("Student not found");
         }
     }
 
