@@ -33,8 +33,7 @@ public class StudentService {
             studentGeneralDto.setGrade(student.getGrade());
             return ResponseEntity.ok(studentGeneralDto);
         }else{
-            return ResponseEntity.notFound().build();
-        }
+            throw new StudentNotFound("Student not found during retrieve operation");        }
     }
 
     public ResponseEntity<Student> addStudent(CreateStudentDto createStudentDto) {
@@ -55,7 +54,7 @@ public class StudentService {
             return ResponseEntity.ok("Student deleted successfully");
         }
         else{
-            return ResponseEntity.notFound().build();
+            throw new StudentNotFound("Student not found during delete operation");
         }
     }
 
@@ -69,7 +68,7 @@ public class StudentService {
             return ResponseEntity.ok("Student updated successfully");
         }
         else{
-            throw new StudentNotFound("Student not found");
+            throw new StudentNotFound("Student not found during update operation");
         }
     }
 
