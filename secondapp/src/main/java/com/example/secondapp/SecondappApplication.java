@@ -14,7 +14,7 @@ public class SecondappApplication {
 
 		Developer obj = context.getBean(Developer.class);
 
-		obj.build();
+		obj.build(); 
 	}
 
 }
